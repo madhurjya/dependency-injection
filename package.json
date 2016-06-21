@@ -1,18 +1,24 @@
 {
   "name": "dependency-injection",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A JavaScript dependency injection container",
+  "main": "dist/dependencies.js",
   "scripts": {
+    "start": "node dist/demo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/subhajitdas/dependency-injection.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "dependency",
+    "injection",
+    "es6",
+    "fluent"
+  ],
+  "author": "Subhajit Das <subhajit@live.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/subhajitdas/dependency-injection/issues"
   },
