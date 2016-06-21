@@ -1,0 +1,21 @@
+{
+    "version": "0.1.0",
+    "command": "babel",
+    "isShellCommand": true,
+    "tasks": [
+        {
+            "taskName": "compile-commonjs",
+            "suppressTaskName": true,
+            "args": [
+                "src",
+                "--out-dir",
+                "dist",
+                "--source-maps",
+                "--watch"
+            ],
+            "isBuildCommand": true,
+            "isWatching": true,
+            "showOutput": "silent"
+        }
+    ]
+}

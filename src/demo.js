@@ -1,0 +1,1 @@
+import {DependencyContainer as DI} from './dependency';
