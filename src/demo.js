@@ -39,5 +39,9 @@ DI.register('collection')
     });
 
 const resolvedInstance = DI.resolve('collection', 'my');
-
 console.log(resolvedInstance);
+
+DI.inject(function (dataservice, collection) {
+    console.log(`Data service: ${dataservice}`);
+    console.log(`Collection: ${collection}`);
+})

@@ -1,6 +1,9 @@
 const _registrations = new Map();
 
 class DependencyContainer {
+    static isRegistered(registrationName) {
+        return _registrations.has(registrationName);
+    }
     static register(name) {
         if (!_registrations.has(name)) {
             _registrations.set(name, new DependencyMapping());
@@ -17,6 +20,16 @@ class DependencyContainer {
         }
         const dependencyDetails = dependencyMapping._mappings.get(mappingName);
         return dependencyDetails._resolve();
+    }
+    static inject(func) {
+        if (!isFunction(func)) {
+            throw new TypeError('Must be a function of class');
+        }
+        const funcArguments = getFunctionParameters(func)
+            .map(param => {
+                return DependencyContainer.resolve(param);
+            });
+        return func(...funcArguments);
     }
 }
 
@@ -47,7 +60,7 @@ class DependencyDetails {
             throw new Error('Constructor is already configured.');
         }
         this._resolveWithConstructor = true;
-        this._constructorParameterMapper = new ParameterMapper(getFunctionArguments(this._type));
+        this._constructorParameterMapper = new ParameterMapper(getFunctionParameters(this._type));
         if (isFunction(parameterMapperFunc)) {
             parameterMapperFunc(this._constructorParameterMapper);
         }
@@ -119,7 +132,7 @@ function isFunction(func) {
     return typeof func === 'function';
 }
 
-function getFunctionArguments(func) {
+function getFunctionParameters(func) {
     const paramExtract = func.toString()
         .match(/\s*function[^\(]*\(([^\)]*)\)/);
     if (paramExtract && paramExtract.length === 2) {
