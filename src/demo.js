@@ -36,10 +36,16 @@ DI.register('collection')
     .withConstructor(ctor => {
         ctor.param('size').asValue(5);
         ctor.param('dataService').asDependency('dataservice');
-    });
+    })
+    .withProperties(props => {
+        props.property('maxSize').asValue(55);
+    })
+    .inSingletoneScope();
 
 const resolvedInstance = DI.resolve('collection', 'my');
+const anotherResolvedInstance = DI.resolve('collection', 'my');
 console.log(resolvedInstance);
+console.log(`Is Singletone: ${resolvedInstance === anotherResolvedInstance}`);
 
 DI.inject(function (dataservice, collection) {
     console.log(`Data service: ${dataservice}`);

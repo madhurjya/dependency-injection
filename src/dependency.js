@@ -52,7 +52,9 @@ class DependencyDetails {
         this._type = type;
         this._resolveWithConstructor = false;
         this._constructorParameterMapper = null;
-
+        this._resolvePropertyValues = false;
+        this._propertyValueMapper = false;
+        this._isInSingletoneScope = false;
         this._resolvedInstance = null;
     }
     withConstructor(parameterMapperFunc) {
@@ -64,17 +66,43 @@ class DependencyDetails {
         if (isFunction(parameterMapperFunc)) {
             parameterMapperFunc(this._constructorParameterMapper);
         }
-        return this._constructorParameterMapper;
+        return this;
+    }
+
+    withProperties(propertyValueMapperFunc) {
+        if (this._resolvePropertyValues === true) {
+            throw new Error('Property values are already configured.');
+        }
+        this._resolvePropertyValues = true;
+        this._propertyValueMapper = new PropertyMapper();
+        if (isFunction(propertyValueMapperFunc)) {
+            propertyValueMapperFunc(this._propertyValueMapper);
+        }
+        return this;
+    }
+
+    inSingletoneScope() {
+        this._isInSingletoneScope = true;
     }
 
     _resolve() {
-        if (this._resolveWithConstructor) {
-            const constructorArguments = this._constructorParameterMapper._resolve();
-            this._resolvedInstance = new this._type(...constructorArguments);
+        if (this._isInSingletoneScope && this._resolvedInstance) {
+            return this._resolvedInstance;
         } else {
-            this._resolvedInstance = new this._type();
+            if (this._resolveWithConstructor === true) {
+                const constructorArguments = this._constructorParameterMapper._resolve();
+                this._resolvedInstance = new this._type(...constructorArguments);
+            } else {
+                this._resolvedInstance = new this._type();
+            }
+            if (this._resolvePropertyValues === true) {
+                this._propertyValueMapper._resolve()
+                    .forEach(([name, value]) => {
+                        this._resolvedInstance[name] = value;
+                    });
+            }
+            return this._resolvedInstance;
         }
-        return this._resolvedInstance;
     }
 }
 
@@ -87,7 +115,7 @@ class ParameterMapper {
     }
     param(name) {
         if (!this._parameterMap.has(name)) {
-            throw new Error(`Argument "${name}" was not detected.`);
+            throw new Error(`Parameter "${name}" was not detected.`);
         }
         return this._parameterMap.get(name);
     }
@@ -97,9 +125,25 @@ class ParameterMapper {
     }
 }
 
+class PropertyMapper {
+    constructor() {
+        this._propertyMap = new Map();
+    }
+    property(name) {
+        if (!this._propertyMap.has(name)) {
+            this._propertyMap.set(name, new ParameterDetails(name));
+        }
+        return this._propertyMap.get(name);
+    }
+    _resolve() {
+        return [...this._propertyMap.entries()]
+            .map(([name, prop]) => [name, prop._resolve()]);
+    }
+}
+
 class ParameterDetails {
-    constructor(argumentName) {
-        this._name = argumentName;
+    constructor(parameterName) {
+        this._name = parameterName;
 
         this._resolveAsValue = false;
         this._valueToResolve = null;
