@@ -2,7 +2,7 @@
   "name": "dependency-injection",
   "version": "1.0.0",
   "description": "A JavaScript dependency injection container",
-  "main": "dist/dependencies.js",
+  "main": "dist/dependency.js",
   "scripts": {
     "start": "node dist/demo",
     "test": "echo \"Error: no test specified\" && exit 1"
