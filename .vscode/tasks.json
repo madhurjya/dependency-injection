@@ -2,20 +2,21 @@
     "version": "0.1.0",
     "command": "babel",
     "isShellCommand": true,
+    "showOutput": "silent",
+    "suppressTaskName": true,
     "tasks": [
         {
-            "taskName": "compile-commonjs",
-            "suppressTaskName": true,
+            "taskName": "babel-es5",
             "args": [
                 "src",
                 "--out-dir",
                 "dist",
                 "--source-maps",
-                "--watch"
+                "--watch",
+                "--copy-files"
             ],
-            "isBuildCommand": true,
             "isWatching": true,
-            "showOutput": "silent"
+            "isBuildCommand": true
         }
     ]
 }

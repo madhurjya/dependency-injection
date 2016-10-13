@@ -1,4 +1,4 @@
-import {DependencyContainer as DI} from './dependency';
+import { DependencyContainer as DI } from './dependency';
 
 class SqlDataService {
     constructor() {
@@ -40,12 +40,12 @@ DI.register('collection')
     .withProperties(props => {
         props.property('maxSize').asValue(55);
     })
-    .inSingletoneScope();
+    .inSingletonScope();
 
 const resolvedInstance = DI.resolve('collection', 'my');
 const anotherResolvedInstance = DI.resolve('collection', 'my');
 console.log(resolvedInstance);
-console.log(`Is Singletone: ${resolvedInstance === anotherResolvedInstance}`);
+console.log(`Is Singleton: ${resolvedInstance === anotherResolvedInstance}`);
 
 DI.inject(function (dataservice, collection) {
     console.log(`Data service: ${dataservice}`);

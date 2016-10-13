@@ -54,7 +54,7 @@ class DependencyDetails {
         this._constructorParameterMapper = null;
         this._resolvePropertyValues = false;
         this._propertyValueMapper = false;
-        this._isInSingletoneScope = false;
+        this._isInSingletonScope = false;
         this._resolvedInstance = null;
     }
     withConstructor(parameterMapperFunc) {
@@ -81,12 +81,12 @@ class DependencyDetails {
         return this;
     }
 
-    inSingletoneScope() {
-        this._isInSingletoneScope = true;
+    inSingletonScope() {
+        this._isInSingletonScope = true;
     }
 
     _resolve() {
-        if (this._isInSingletoneScope && this._resolvedInstance) {
+        if (this._isInSingletonScope && this._resolvedInstance) {
             return this._resolvedInstance;
         } else {
             if (this._resolveWithConstructor === true) {
@@ -188,4 +188,4 @@ function getFunctionParameters(func) {
     }
 }
 
-export {DependencyContainer};
+export { DependencyContainer };
