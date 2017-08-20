@@ -1,4 +1,5 @@
-import { DependencyContainer as DI } from './dependency';
+/* eslint-disable no-console */
+import { DependencyContainer as DI } from '../src/dependency';
 
 class SqlDataService {
     constructor() {
@@ -50,4 +51,4 @@ console.log(`Is Singleton: ${resolvedInstance === anotherResolvedInstance}`);
 DI.inject(function (dataservice, collection) {
     console.log(`Data service: ${dataservice}`);
     console.log(`Collection: ${collection}`);
-})
+});

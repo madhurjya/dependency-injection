@@ -1,22 +1,20 @@
 {
-    "version": "0.1.0",
-    "command": "babel",
-    "isShellCommand": true,
-    "showOutput": "silent",
-    "suppressTaskName": true,
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
     "tasks": [
         {
-            "taskName": "babel-es5",
+            "taskName": "build",
+            "type": "shell",
+            "command": "npm",
             "args": [
-                "src",
-                "--out-dir",
-                "dist",
-                "--source-maps",
-                "--watch",
-                "--copy-files"
+                "run",
+                "build"
             ],
-            "isWatching": true,
-            "isBuildCommand": true
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }
