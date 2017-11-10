@@ -1,9 +1,11 @@
 {
     "presets": [
         [
-            "es2015",
+            "env",
             {
-                "modules": "commonjs"
+                "targets": {
+                    "node": "8.9.1"
+                }
             }
         ]
     ]

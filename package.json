@@ -2,10 +2,10 @@
   "name": "dependency-injection",
   "version": "1.0.0",
   "description": "A JavaScript dependency injection container",
-  "main": "dist/dependency.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "npm run lint && npm run clean && npm run build:dist",
-    "build:dist": "node_modules/.bin/babel src --out-dir dist --source-maps --minified",
+    "build:dist": "./node_modules/.bin/webpack --config ./build/webpack.dist.babel.js",
     "clean": "node_modules/.bin/rimraf ./dist",
     "lint": "node_modules/.bin/eslint --color --format stylish src demo",
     "start": "node_modules/.bin/babel-node demo/index.js",
@@ -29,9 +29,12 @@
   "homepage": "https://github.com/subhajitdas/dependency-injection#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "eslint": "^4.5.0",
-    "eslint-plugin-import": "^2.7.0",
-    "rimraf": "^2.6.1"
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.10.0",
+    "eslint-plugin-import": "^2.8.0",
+    "rimraf": "^2.6.2",
+    "uglifyjs-webpack-plugin": "^1.0.1",
+    "webpack": "^3.8.1"
   }
 }

@@ -15,6 +15,19 @@
                 "kind": "build",
                 "isDefault": true
             }
+        },
+        {
+            "taskName": "lint",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "run",
+                "lint",
+                "-s"
+            ],
+            "problemMatcher": [
+                "$eslint-stylish"
+            ]
         }
     ]
 }

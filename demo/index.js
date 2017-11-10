@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { DependencyContainer as DI } from '../src/dependency';
+import DI from '../dist/index';
 
 class SqlDataService {
     constructor() {
